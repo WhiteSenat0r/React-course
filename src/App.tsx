@@ -1,10 +1,13 @@
-import ExampleComponent from "./components/ExampleComponent.tsx";
+import MainPage from "./pages/MainPage.tsx";
+import {BrowserRouter} from "react-router-dom";
 
 function App() {
 
   return (
     <>
-      <ExampleComponent></ExampleComponent>
+        <BrowserRouter>
+            <MainPage></MainPage>
+        </BrowserRouter>
     </>
   )
 }

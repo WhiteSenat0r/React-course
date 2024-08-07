@@ -1,10 +1,11 @@
 import './styles/App.css'
+import ExampleComponent from "./components/ExampleComponent.tsx";
 
 function App() {
 
   return (
     <>
-      <h1>Hello world!</h1>
+      <ExampleComponent></ExampleComponent>
     </>
   )
 }

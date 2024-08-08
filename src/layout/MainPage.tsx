@@ -9,10 +9,10 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import {AppBar} from "../components/main_page/AppBar.tsx";
-import {Drawer} from "../components/main_page/Drawer.tsx";
-import {DrawerListItems} from "../components/main_page/DrawerListItems.tsx";
-import Content from "../components/main_page/Content.tsx";
+import {AppBar} from "./components/AppBar.tsx";
+import {Drawer} from "./components/Drawer.tsx";
+import {DrawerListItems} from "./components/DrawerListItems.tsx";
+import Content from "./components/Content.tsx";
 
 
 export default function MainPage() {

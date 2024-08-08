@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import {MAIN_PAGE_CONSTANTS} from "../../constants/pages/MainPageConstants.ts";
+import {MAIN_PAGE_CONSTANTS} from "../variables/MainPageConstants.ts";
 
 const width: number = MAIN_PAGE_CONSTANTS.DRAWER_WIDTH;
 

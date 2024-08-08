@@ -1,15 +1,15 @@
 import {styled} from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
-import {MAIN_PAGE_CONSTANTS} from "../variables/MainPageConstants.ts";
+import {LAYOUT_CONSTANTS} from "../variables/layoutConstants.ts";
 
-const elementWidth: number = MAIN_PAGE_CONSTANTS.DRAWER_WIDTH;
+const drawerWidth: number = LAYOUT_CONSTANTS.DRAWER_WIDTH;
 
-export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+export const AppDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
         '& .MuiDrawer-paper': {
             position: 'relative',
             whiteSpace: 'nowrap',
-            width: elementWidth,
+            width: drawerWidth,
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,

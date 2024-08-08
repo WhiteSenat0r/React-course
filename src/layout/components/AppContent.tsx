@@ -1,9 +1,9 @@
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import Routes from "./Routes.tsx";
+import {Outlet} from "react-router-dom";
 
-export default function Content() {
+export default function AppContent() {
     return(
         <Box
             component="main"
@@ -19,7 +19,7 @@ export default function Content() {
         >
             <Toolbar />
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                <Routes></Routes>
+                <Outlet></Outlet>
             </Container>
         </Box>
     );

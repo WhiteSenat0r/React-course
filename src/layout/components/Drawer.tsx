@@ -1,6 +1,6 @@
 import {styled} from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
-import {MAIN_PAGE_CONSTANTS} from "../../constants/pages/MainPageConstants.ts";
+import {MAIN_PAGE_CONSTANTS} from "../variables/MainPageConstants.ts";
 
 const elementWidth: number = MAIN_PAGE_CONSTANTS.DRAWER_WIDTH;
 

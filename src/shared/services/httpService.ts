@@ -14,6 +14,8 @@ abstract class HttpService {
         this.setupInterceptors();
     }
 
+    // TODO Add R generic for response model, T - for request
+
     protected async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
         const response: AxiosResponse<T> = await this.axiosInstance.get(url, config);
         return response.data;

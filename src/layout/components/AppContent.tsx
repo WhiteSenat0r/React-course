@@ -1,5 +1,3 @@
-import Toolbar from "@mui/material/Toolbar";
-import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import {Outlet} from "react-router-dom";
 
@@ -15,12 +13,12 @@ export default function AppContent() {
                 flexGrow: 1,
                 height: '100vh',
                 overflow: 'auto',
+                pt: 8
             }}
         >
-            <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Box sx={{ m:4 }}>
                 <Outlet></Outlet>
-            </Container>
+            </Box>
         </Box>
     );
 }

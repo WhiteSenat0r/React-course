@@ -1,12 +1,12 @@
-import MainPage from "./pages/MainPage.tsx";
 import {BrowserRouter} from "react-router-dom";
+import Routes from "./components/Routes.tsx";
 
 function App() {
 
   return (
     <>
         <BrowserRouter>
-            <MainPage></MainPage>
+            <Routes />
         </BrowserRouter>
     </>
   )

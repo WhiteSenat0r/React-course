@@ -1,10 +1,10 @@
 import { styled } from '@mui/material/styles';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import {LAYOUT_CONSTANTS} from "../variables/layoutConstants.ts";
+import {LAYOUT_CONSTANTS} from "../../variables/layoutConstants.ts";
 
 const drawerWidth: number = LAYOUT_CONSTANTS.DRAWER_WIDTH;
 
-interface AppBarProps extends MuiAppBarProps {
+export interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
 }
 

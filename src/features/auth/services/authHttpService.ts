@@ -1,4 +1,4 @@
-import HttpService from "../../../shared/services/httpService.ts";
+import HttpService from "../../../shared/services/http/httpService.ts";
 
 import {AxiosRequestConfig} from "axios";
 
@@ -23,6 +23,6 @@ export default class AuthHttpService extends HttpService {
         const response = await super.post<IAuthToken>(LOGIN_ENDPOINT, loginData, config);
         console.log(response);
 
-        return !!response.token && response.token.length > 0;
+        return !!response.data!.token && response.data!.token.length > 0;
     }
 }

@@ -1,19 +1,14 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-export default function SignInForm() {
+import React from "react";
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            username: data.get('username'),
-            password: data.get('password'),
-        });
-    };
+import useAuth from "../hooks/useAuth.ts";
+
+export default function SignInForm() {
+    const { isAuthenticated, handleSignIn } = useAuth();
 
     return (
         <Box maxWidth="xs"
@@ -27,15 +22,13 @@ export default function SignInForm() {
             <Typography component="h1" variant="h5">
                 Sign in
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <Box component="form" onSubmit={handleSignIn} noValidate sx={{ mt: 1 }}>
                 <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="username"
-                    label="Username"
-                    name="username"
-                    autoComplete="username"
+                    margin="normal" required fullWidth
+                    id="email"
+                    label="Email"
+                    name="email"
+                    autoComplete="email"
                     autoFocus
                 />
                 <TextField

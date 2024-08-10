@@ -1,46 +1,54 @@
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import React from "react";
+import React, { useState } from "react";
 
 import useAuth from "../hooks/useAuth.ts";
+import {EmailInput} from "./inputs/EmailInput.tsx";
+import {PasswordInput} from "./inputs/PasswordInput.tsx";
+import {SignInAuthErrorAlert} from "./inputs/SignInAuthErrorAlert.tsx";
 
 export default function SignInForm() {
     const { isAuthenticated, handleSignIn } = useAuth();
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (emailError === '' && passwordError === '') {
+            await handleSignIn(e);
+        }
+    };
 
     return (
-        <Box maxWidth="xs"
-            sx={{
-                marginTop: 8,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}
+        <Box
+             sx={{
+                 marginTop: 8,
+                 display: 'flex',
+                 flexDirection: 'column',
+                 alignItems: 'center',
+             }}
         >
             <Typography component="h1" variant="h5">
                 Sign in
             </Typography>
-            <Box component="form" onSubmit={handleSignIn} noValidate sx={{ mt: 1 }}>
-                <TextField
-                    margin="normal" required fullWidth
-                    id="email"
-                    label="Email"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, maxWidth: 420 }}>
+                <EmailInput
+                    email={email}
+                    setEmail={setEmail}
+                    emailError={emailError}
+                    setEmailError={setEmailError}
                 />
-                <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                />
+                <PasswordInput
+                    password={password}
+                    setPassword={setPassword}
+                    passwordError={passwordError}
+                    setPasswordError={setPasswordError} />
+                <SignInAuthErrorAlert isAuthenticated={isAuthenticated}/>
                 <Button
                     type="submit"
                     fullWidth

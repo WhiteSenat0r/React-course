@@ -14,8 +14,6 @@ abstract class HttpService {
         this.setupInterceptors();
     }
 
-    // TODO Add R generic for response model, T - for request
-
     protected async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
         const response: AxiosResponse<T> = await this.axiosInstance.get(url, config);
         return response.data;
@@ -23,18 +21,7 @@ abstract class HttpService {
 
     protected async post<T>(url: string, data: unknown, config?: AxiosRequestConfig): Promise<T> {
         const response: AxiosResponse<T> = await this.axiosInstance.post(url, data, config);
-        return response.data;
-    }
-
-    protected async postFormData<T>(url: string, formData: FormData, config?: AxiosRequestConfig): Promise<T> {
-        const response: AxiosResponse<T> = await this.axiosInstance.post(url, formData, {
-            ...config,
-            headers: {
-                ...config?.headers,
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-        return response.data;
+        return response.data as T;
     }
 
     protected async put<T>(url: string, data: unknown, config?: AxiosRequestConfig): Promise<T> {

@@ -1,10 +1,10 @@
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import React, {PropsWithChildren} from "react";
+import './styles/index.css'
 
 const theme = createTheme();
 
-// Interface for props type specification
 interface AppThemeProviderProps {
     children: React.ReactNode;
 }

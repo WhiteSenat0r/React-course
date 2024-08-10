@@ -5,7 +5,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import {Link} from "react-router-dom";
 import {APP_ROUTES} from "../../shared/variables/appRoutes.ts";
 
-export const DrawerListItems = (
+export const SideDrawerListItems = (
     <ListItemButton component={Link} to={APP_ROUTES.SIGN_IN}>
         <ListItemIcon>
             <DashboardIcon />

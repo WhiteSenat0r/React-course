@@ -5,9 +5,12 @@ import Typography from '@mui/material/Typography';
 import React, { useState } from "react";
 
 import useAuth from "../hooks/useAuth.ts";
+
 import {EmailInput} from "./inputs/EmailInput.tsx";
 import {PasswordInput} from "./inputs/PasswordInput.tsx";
-import {SignInAuthErrorAlert} from "./inputs/SignInAuthErrorAlert.tsx";
+
+import {SignInAuthErrorAlert} from "./SignInAuthErrorAlert.tsx";
+import {SignInRedirect} from "./SignInRedirect.tsx";
 
 export default function SignInForm() {
     const { isAuthenticated, handleSignIn } = useAuth();
@@ -58,6 +61,7 @@ export default function SignInForm() {
                     Sign In
                 </Button>
             </Box>
+            <SignInRedirect isAuthenticated={isAuthenticated} />
         </Box>
     );
 }

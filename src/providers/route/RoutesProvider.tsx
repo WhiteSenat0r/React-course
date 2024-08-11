@@ -8,6 +8,7 @@ import {APP_ROUTES} from "../../shared/variables/appRoutes.ts";
 
 import Layout from "../../layout/Layout.tsx";
 import {ProtectedRoute} from "./components/ProtectedRoute.tsx";
+import UsersTable from "../../features/users/components/UsersTable.tsx";
 
 export default function RoutesProvider() {
     return(
@@ -15,11 +16,14 @@ export default function RoutesProvider() {
             <Route path={APP_ROUTES.SIGN_IN} element={<ProtectedRoute authOnly={false}/>}>
                 <Route path={APP_ROUTES.SIGN_IN} element={<SignInForm />} />
             </Route>
+
             <Route path={APP_ROUTES.HOME} element={<ProtectedRoute authOnly={true}/>}>
                 <Route path={APP_ROUTES.HOME} element={<Layout />}>
                     <Route path={APP_ROUTES.HOME} element={<Example />} />
+                    <Route path={APP_ROUTES.USERS} element={<UsersTable />} />
                 </Route>
             </Route>
+
             <Route path="*" element={<NotFound />} />
         </Routes>
     );

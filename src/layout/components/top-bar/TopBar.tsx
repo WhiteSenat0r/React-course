@@ -13,7 +13,7 @@ interface TopBarProps {
 
 export const TopBar: React.FC<TopBarProps> = ({ open, toggleDrawer }) => {
     return (
-        <AppBar position="absolute" open={open}>
+        <AppBar position="fixed" open={open}>
             <Toolbar
                 sx={{
                     userSelect: 'none',

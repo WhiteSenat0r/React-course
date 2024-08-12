@@ -1,6 +1,6 @@
 import HttpService from "../../../shared/services/http/httpService.ts";
 
-import {AxiosRequestConfig} from "axios";
+import {AxiosRequestConfig, HttpStatusCode} from "axios";
 import {IUserCollection} from "../types/interfaces/iUserCollection.ts";
 
 const BASE_URL = "https://reqres.in/api";
@@ -48,5 +48,17 @@ export default class UsersHttpService extends HttpService {
         const response = await super.get<IUserCollection>(`${GET_USER_ENDPOINT}${id}`, config);
 
         return response.data;
+    }
+
+    async deleteUser(id: number): Promise<boolean> {
+        const config: AxiosRequestConfig = {
+            method: 'DELETE',
+            baseURL: BASE_URL,
+            url: `${GET_USER_ENDPOINT}${id}`,
+        };
+
+        const response = await super.delete<boolean>(`${GET_USER_ENDPOINT}${id}`, config);
+
+        return response.status === HttpStatusCode.NoContent;
     }
 }

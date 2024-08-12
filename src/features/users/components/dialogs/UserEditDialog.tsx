@@ -4,18 +4,25 @@ import {Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import {useFetchUser} from "../../hooks/useFetchUser.ts";
 
 interface UserEditDialogProps {
-    user: IUser;
+    userId: number;
     open: boolean;
     onClose: () => void;
 }
 
-const UserEditDialog: React.FC<UserEditDialogProps> = ({ user, open, onClose }) => {
+const UserEditDialog: React.FC<UserEditDialogProps> = ({ userId, open, onClose }) => {
     const handleSave = () => {
         console.log("Save changes");
         onClose();
     };
+
+    const { fetchedUser, isLoading } = useFetchUser(userId);
+
+    if (isLoading || !fetchedUser) {
+        return null
+    }
 
     return (
         <Dialog
@@ -29,19 +36,19 @@ const UserEditDialog: React.FC<UserEditDialogProps> = ({ user, open, onClose }) 
                     <TextField
                         fullWidth
                         label="First name"
-                        defaultValue={user.first_name}
+                        defaultValue={fetchedUser.first_name}
                         margin="normal"
                     />
                     <TextField
                         fullWidth
                         label="Last name"
-                        defaultValue={user.last_name}
+                        defaultValue={fetchedUser.last_name}
                         margin="normal"
                     />
                     <TextField
                         fullWidth
                         label="Email"
-                        defaultValue={user.email}
+                        defaultValue={fetchedUser.email}
                         margin="normal"
                     />
                 </Box>

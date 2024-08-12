@@ -18,7 +18,7 @@ const UsersDataGrid: React.FC<UsersDataGridProps> = ({ rows, columns, onRowClick
             }}
             autoHeight
             pagination
-            pageSizeOptions={[5, 10, 25]}
+            pageSizeOptions={[5, 10, 25]} // TODO Make const
             rows={rows}
             columns={columns}
             onRowClick={onRowClick}

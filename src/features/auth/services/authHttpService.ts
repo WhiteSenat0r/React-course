@@ -21,7 +21,6 @@ export default class AuthHttpService extends HttpService {
         };
 
         const response = await super.post<IAuthToken>(LOGIN_ENDPOINT, loginData, config);
-        console.log(response);
 
         return !!response.data!.token && response.data!.token.length > 0;
     }

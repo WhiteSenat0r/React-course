@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button } from '@mui/material';
-import { User } from './userUtils';
+import {IUser} from "../types/interfaces/iUser.ts";
 
 interface UserActionButtonProps {
     label: string;
-    onClick: (event: React.MouseEvent, user: User) => void;
-    user: User;
+    onClick: (event: React.MouseEvent, user: IUser) => void;
+    user: IUser;
 }
 
 const UserActionButton: React.FC<UserActionButtonProps> = ({ label, onClick, user }) => (

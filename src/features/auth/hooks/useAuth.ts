@@ -1,10 +1,13 @@
 import {useState} from "react";
 import AuthHttpService from "../services/authHttpService.ts";
 import ILoginData from "../types/interfaces/iLoginData.ts";
+import {useNavigate} from "react-router-dom";
+import {APP_ROUTES} from "../../../shared/variables/appRoutes.ts";
 
 const useAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | undefined>(undefined);
     const authHttpService = new AuthHttpService();
+    const navigate = useNavigate();
 
     const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) : Promise<void> => {
         event.preventDefault();
@@ -16,6 +19,7 @@ const useAuth = () => {
         if (isLoginSuccessful) {
             setIsAuthenticated(true);
             localStorage.setItem('authStatus', 'true');
+            navigate(APP_ROUTES.USERS);
         }
         else {
             setIsAuthenticated(false);

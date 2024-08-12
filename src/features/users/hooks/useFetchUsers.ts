@@ -26,5 +26,5 @@ export const useFetchUsers = () => {
         fetchUsers();
     }, []);
 
-    return users;
+    return {users, setUsers};
 };

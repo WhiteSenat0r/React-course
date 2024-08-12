@@ -2,6 +2,7 @@ import HttpService from "../../../shared/services/http/httpService.ts";
 
 import {AxiosRequestConfig, HttpStatusCode} from "axios";
 import {IUserCollection} from "../types/interfaces/iUserCollection.ts";
+import {IUser} from "../types/interfaces/iUser.ts";
 
 const BASE_URL = "https://reqres.in/api";
 const GET_USERS_ENDPOINT = "/users";
@@ -60,5 +61,17 @@ export default class UsersHttpService extends HttpService {
         const response = await super.delete<boolean>(`${GET_USER_ENDPOINT}${id}`, config);
 
         return response.status === HttpStatusCode.NoContent;
+    }
+
+    async updateUser(user: IUser): Promise<boolean> {
+        const config: AxiosRequestConfig = {
+            method: 'PUT',
+            baseURL: BASE_URL,
+            url: `${GET_USER_ENDPOINT}${user.id}`,
+        };
+
+        const response = await super.put<boolean>(`${GET_USER_ENDPOINT}${user.id}`, user, config);
+
+        return response.status === HttpStatusCode.Ok;
     }
 }

@@ -2,7 +2,7 @@ import {useState} from "react";
 
 import {IUser} from "../../types/interfaces/iUser.ts";
 
-export const useDeleteDialog = () => {
+export const useDeleteDialog = (users: IUser[], setUsers: (users: IUser[]) => void) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
 
@@ -19,6 +19,8 @@ export const useDeleteDialog = () => {
 
     const handleConfirmDelete = () => {
         if (selectedUser) {
+            const newUserCollection = users.filter(user => user.id !== selectedUser.id);
+            setUsers(newUserCollection);
             closeDialog();
         }
     };

@@ -39,18 +39,6 @@ export default class UsersHttpService extends HttpService {
         return result;
     }
 
-    async getUser(id: number): Promise<IUserCollection> {
-        const config: AxiosRequestConfig = {
-            method: 'GET',
-            baseURL: BASE_URL,
-            url: `${GET_USER_ENDPOINT}${id}`,
-        };
-
-        const response = await super.get<IUserCollection>(`${GET_USER_ENDPOINT}${id}`, config);
-
-        return response.data;
-    }
-
     async deleteUser(id: number): Promise<boolean> {
         const config: AxiosRequestConfig = {
             method: 'DELETE',
@@ -61,6 +49,18 @@ export default class UsersHttpService extends HttpService {
         const response = await super.delete<boolean>(`${GET_USER_ENDPOINT}${id}`, config);
 
         return response.status === HttpStatusCode.NoContent;
+    }
+
+    async createUser(user: IUser): Promise<boolean> {
+        const config: AxiosRequestConfig = {
+            method: 'POST',
+            baseURL: BASE_URL,
+            url: GET_USERS_ENDPOINT,
+        };
+
+        const response = await super.post<boolean>(GET_USERS_ENDPOINT, user, config);
+
+        return response.status === HttpStatusCode.Created;
     }
 
     async updateUser(user: IUser): Promise<boolean> {

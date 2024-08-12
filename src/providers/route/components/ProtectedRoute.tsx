@@ -1,19 +1,20 @@
-import React from "react";
+import React, {Fragment, ReactNode} from "react";
 
 import {APP_ROUTES} from "../../../shared/variables/appRoutes.ts";
 
-import {Navigate, Outlet} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 interface ProtectedRouteProps {
-    authOnly: boolean;
+    protectedRoute: boolean;
+    children: ReactNode;
 }
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ authOnly }) => {
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ protectedRoute, children }) => {
     const authStatus = localStorage.getItem("authStatus") === 'true';
 
-    if (authOnly) {
-        return authStatus ? <Outlet /> : <Navigate to={APP_ROUTES.SIGN_IN} />;
+    if (protectedRoute) {
+        return authStatus ? <>{children}</> : <Navigate to={APP_ROUTES.SIGN_IN} />;
     } else {
-        return !authStatus ? <Outlet /> : <Navigate to={APP_ROUTES.HOME} />;
+        return !authStatus ? <>{children}</> : <Navigate to={APP_ROUTES.USERS} />;
     }
 };

@@ -18,6 +18,7 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({ open, toggleDrawer }) =>
         <AppDrawer variant="permanent" open={open}>
             <Toolbar
                 sx={{
+                    visibility: open ? "visible" : "hidden",
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'flex-end',
@@ -28,7 +29,7 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({ open, toggleDrawer }) =>
                     <ChevronLeftIcon />
                 </IconButton>
             </Toolbar>
-            <Divider />
+            <Divider sx={{visibility: open ? "visible" : "hidden"}} />
             <List component="nav">
                 {SideDrawerListItems}
             </List>

@@ -5,10 +5,11 @@ import { IUser } from "../types/interfaces/iUser";
 interface UsersDataGridProps {
     rows: IUser[];
     columns: GridColDef[];
+    pageSizeOptions: number[];
     onRowClick: (params: GridRowModel) => void;
 }
 
-const UsersDataGrid: React.FC<UsersDataGridProps> = ({ rows, columns, onRowClick }) => {
+const UsersDataGrid: React.FC<UsersDataGridProps> = ({ rows, columns, pageSizeOptions, onRowClick }) => {
     return (
         <DataGrid
             sx={{
@@ -18,14 +19,14 @@ const UsersDataGrid: React.FC<UsersDataGridProps> = ({ rows, columns, onRowClick
             }}
             autoHeight
             pagination
-            pageSizeOptions={[5, 10, 25]} // TODO Make const
+            pageSizeOptions={pageSizeOptions}
             rows={rows}
             columns={columns}
             onRowClick={onRowClick}
             disableRowSelectionOnClick
             initialState={{
                 pagination: {
-                    paginationModel: { pageSize: 5, page: 0 },
+                    paginationModel: { pageSize: pageSizeOptions[0], page: 0 },
                 },
             }}
         />

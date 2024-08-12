@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 
 import React from "react";
 import {useFetchUser} from "../../hooks/useFetchUser.ts";
+import {useDeleteUser} from "../../hooks/useDeleteUser.ts";
 
 interface UserDeleteDialogProps {
     userId: number;
@@ -12,7 +13,16 @@ interface UserDeleteDialogProps {
 }
 
 const UserDeleteDialog: React.FC<UserDeleteDialogProps> = ({ userId, open, onClose, onConfirm }) => {
+    const handleDeleteUser = useDeleteUser();
     const { fetchedUser, isLoading } = useFetchUser(userId);
+
+    const removeUser = async () => {
+        const removalResult = await handleDeleteUser(fetchedUser.id);
+
+        if (removalResult) {
+            onConfirm();
+        }
+    }
 
     if (isLoading || !fetchedUser) {
         return null
@@ -33,7 +43,7 @@ const UserDeleteDialog: React.FC<UserDeleteDialogProps> = ({ userId, open, onClo
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Cancel</Button>
-                <Button onClick={onConfirm} color="error" autoFocus>
+                <Button onClick={removeUser} color="error" autoFocus>
                     Delete
                 </Button>
             </DialogActions>

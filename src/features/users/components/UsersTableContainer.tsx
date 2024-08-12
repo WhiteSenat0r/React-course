@@ -11,14 +11,15 @@ import UserDeleteDialog from "./dialogs/UserDeleteDialog.tsx";
 
 interface UsersTableContentProps {
     users: IUser[]
+    setUsers: (users: IUser[]) => void
 }
 
 const pageSizeOptions: number[] = [5, 10, 25];
 
-const UsersTableContainer: React.FC<UsersTableContentProps> = ({users}) => {
+const UsersTableContainer: React.FC<UsersTableContentProps> = ({users, setUsers}) => {
     const detailsDialog = useDetailsDialog();
     const editDialog = useEditDialog();
-    const deleteDialog = useDeleteDialog();
+    const deleteDialog = useDeleteDialog(users, setUsers);
 
     const columns = useUsersTableColumns(editDialog.openDialog, deleteDialog.openDialog);
 

@@ -14,7 +14,7 @@ const UsersTable: React.FC = () => {
             <Typography component="h1" variant="h4" fontWeight="bold" sx={{ml:0.5, my:2}}>
                 Users
             </Typography>
-            <UsersTableContainer users={users} />
+            <UsersTableContainer users={users.users} setUsers={users.setUsers} />
         </Box>
     );
 };

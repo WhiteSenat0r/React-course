@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+
 import { IUser } from '../types/interfaces/iUser';
 import {IUserCollection} from "../types/interfaces/iUserCollection.ts";
+
 import UsersHttpService from "../services/usersHttpService.ts";
 
 export const useFetchUsers = () => {
@@ -17,12 +19,12 @@ export const useFetchUsers = () => {
                 setUsers(userRows);
             }
             finally {
-                setIsLoading(false);
+                setIsLoading(!isLoading);
             }
         };
 
         fetchUsers();
     }, []);
 
-    return { users, isLoading };
+    return users;
 };

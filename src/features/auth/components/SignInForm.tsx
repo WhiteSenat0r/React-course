@@ -10,7 +10,6 @@ import {EmailInput} from "./inputs/EmailInput.tsx";
 import {PasswordInput} from "./inputs/PasswordInput.tsx";
 
 import {SignInAuthErrorAlert} from "./SignInAuthErrorAlert.tsx";
-import {SignInRedirect} from "./SignInRedirect.tsx";
 
 export default function SignInForm() {
     const { isAuthenticated, handleSignIn } = useAuth();
@@ -61,7 +60,6 @@ export default function SignInForm() {
                     Sign In
                 </Button>
             </Box>
-            <SignInRedirect isAuthenticated={isAuthenticated} />
         </Box>
     );
 }

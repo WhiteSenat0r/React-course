@@ -3,21 +3,15 @@ import {Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import {useFetchUser} from "../../hooks/useFetchUser.ts";
+import {IUser} from "../../types/interfaces/iUser.ts";
 
 interface UserDetailsDialogProps {
-    userId: number;
+    user: IUser;
     open: boolean;
     onClose: () => void;
 }
 
-const UserDetailsDialog: React.FC<UserDetailsDialogProps> = ({ userId, open, onClose }) => {
-    const { fetchedUser, isLoading } = useFetchUser(userId);
-
-    if (isLoading || !fetchedUser) {
-        return null
-    }
-
+const UserDetailsDialog: React.FC<UserDetailsDialogProps> = ({ user, open, onClose }) => {
     return (
         <Dialog
             open={open}
@@ -28,10 +22,10 @@ const UserDetailsDialog: React.FC<UserDetailsDialogProps> = ({ userId, open, onC
             <DialogTitle id="details-dialog-title">User details</DialogTitle>
             <DialogContent>
                 <Box id="details-dialog-description">
-                    <Typography>ID: {fetchedUser.id}</Typography>
-                    <Typography>First name: {fetchedUser.first_name}</Typography>
-                    <Typography>Last name: {fetchedUser.last_name}</Typography>
-                    <Typography>Email: {fetchedUser.email}</Typography>
+                    <Typography>ID: {user.id}</Typography>
+                    <Typography>First name: {user.first_name}</Typography>
+                    <Typography>Last name: {user.last_name}</Typography>
+                    <Typography>Email: {user.email}</Typography>
                 </Box>
             </DialogContent>
             <DialogActions>

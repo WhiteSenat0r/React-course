@@ -2,30 +2,25 @@ import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} fr
 import Button from "@mui/material/Button";
 
 import React from "react";
-import {useFetchUser} from "../../hooks/useFetchUser.ts";
 import {useDeleteUser} from "../../hooks/useDeleteUser.ts";
+import {IUser} from "../../types/interfaces/iUser.ts";
 
 interface UserDeleteDialogProps {
-    userId: number;
+    user: IUser;
     open: boolean;
     onClose: () => void;
     onConfirm: () => void;
 }
 
-const UserDeleteDialog: React.FC<UserDeleteDialogProps> = ({ userId, open, onClose, onConfirm }) => {
+const UserDeleteDialog: React.FC<UserDeleteDialogProps> = ({ user, open, onClose, onConfirm }) => {
     const handleDeleteUser = useDeleteUser();
-    const { fetchedUser, isLoading } = useFetchUser(userId);
 
     const removeUser = async () => {
-        const removalResult = await handleDeleteUser(fetchedUser.id);
+        const removalResult = await handleDeleteUser(user.id);
 
         if (removalResult) {
             onConfirm();
         }
-    }
-
-    if (isLoading || !fetchedUser) {
-        return null
     }
 
     return (
@@ -38,7 +33,7 @@ const UserDeleteDialog: React.FC<UserDeleteDialogProps> = ({ userId, open, onClo
             <DialogTitle id="delete-dialog-title">Confirm Deletion</DialogTitle>
             <DialogContent>
                 <DialogContentText id="delete-dialog-description">
-                    Are you sure you want to delete the user {fetchedUser.first_name} {fetchedUser.last_name}?
+                    Are you sure you want to delete the user {user.first_name} {user.last_name}?
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

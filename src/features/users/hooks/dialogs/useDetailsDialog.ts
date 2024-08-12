@@ -7,7 +7,7 @@ export const useDetailsDialog = () => {
     const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
 
     const openDialog = (user: IUser) => {
-        setSelectedUser(user);
+        setSelectedUser(user.row);
         setIsOpen(true);
     };
 

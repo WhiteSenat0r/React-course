@@ -18,7 +18,7 @@ const pageSizeOptions: number[] = [5, 10, 25];
 
 const UsersTableContainer: React.FC<UsersTableContentProps> = ({users, setUsers}) => {
     const detailsDialog = useDetailsDialog();
-    const editDialog = useEditDialog();
+    const editDialog = useEditDialog(users, setUsers);
     const deleteDialog = useDeleteDialog(users, setUsers);
 
     const columns = useUsersTableColumns(editDialog.openDialog, deleteDialog.openDialog);
@@ -34,7 +34,7 @@ const UsersTableContainer: React.FC<UsersTableContentProps> = ({users, setUsers}
             {
                 detailsDialog.isOpen && detailsDialog.selectedUser && (
                     <UserDetailsDialog
-                        userId={detailsDialog.selectedUser.id}
+                        user={detailsDialog.selectedUser}
                         open={detailsDialog.isOpen}
                         onClose={detailsDialog.closeDialog}
                     />
@@ -43,16 +43,17 @@ const UsersTableContainer: React.FC<UsersTableContentProps> = ({users, setUsers}
             {
                 editDialog.isOpen && editDialog.selectedUser && (
                     <UserEditDialog
-                        userId={editDialog.selectedUser.id}
+                        user={editDialog.selectedUser}
                         open={editDialog.isOpen}
                         onClose={editDialog.closeDialog}
+                        onConfirm={editDialog.handleConfirmEdit}
                     />
                 )
             }
             {
                 deleteDialog.isOpen && deleteDialog.selectedUser && (
                     <UserDeleteDialog
-                        userId={deleteDialog.selectedUser.id}
+                        user={deleteDialog.selectedUser}
                         open={deleteDialog.isOpen}
                         onClose={deleteDialog.closeDialog}
                         onConfirm={deleteDialog.handleConfirmDelete}

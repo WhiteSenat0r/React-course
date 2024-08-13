@@ -1,62 +1,71 @@
 import React from "react";
-import useUsersTableColumns from "../hooks/table-columns/UseUsersTableColumns.tsx";
+import useUsersTableColumns from "../hooks/useUsersTableColumns.tsx";
 import UsersDataGrid from "./UsersDataGrid.tsx";
-import {IUser} from "../types/interfaces/iUser.ts";
-import {useDetailsDialog} from "../hooks/dialogs/useDetailsDialog.ts";
-import {useEditDialog} from "../hooks/dialogs/useEditDialog.ts";
-import {useDeleteDialog} from "../hooks/dialogs/useDeleteDialog.ts";
 import UserDetailsDialog from "./dialogs/UserDetailsDialog.tsx";
 import UserEditDialog from "./dialogs/UserEditDialog.tsx";
 import UserDeleteDialog from "./dialogs/UserDeleteDialog.tsx";
-
-interface UsersTableContentProps {
-    users: IUser[]
-    setUsers: (users: IUser[]) => void
-}
+import UserCreateDialog from "./dialogs/UserCreateDialog.tsx";
+import Button from "@mui/material/Button";
+import {useUsersState} from "../hooks/useUsersState.ts";
+import {useUsersTableRows} from "../hooks/useUsersTableRows.ts";
+import {useDialog} from "../hooks/useDialog.ts";
 
 const pageSizeOptions: number[] = [5, 10, 25];
 
-const UsersTableContainer: React.FC<UsersTableContentProps> = ({users, setUsers}) => {
-    const detailsDialog = useDetailsDialog();
-    const editDialog = useEditDialog(users, setUsers);
-    const deleteDialog = useDeleteDialog(users, setUsers);
+const UsersTableContainer: React.FC = () => {
 
-    const columns = useUsersTableColumns(editDialog.openDialog, deleteDialog.openDialog);
+    const users = useUsersState();
+    const { rows } = useUsersTableRows(users.users);
+
+    const createDialog = useDialog();
+    const detailsDialog = useDialog();
+    const editDialog = useDialog();
+    const deleteDialog = useDialog();
+
+    const columns = useUsersTableColumns(editDialog.openDialogByClick, deleteDialog.openDialogByClick);
 
     return (
         <>
+            <UserCreateDialog
+                users={users.users}
+                open={createDialog.isOpen}
+                onClose={createDialog.closeDialog}
+                onConfirm={users.setNewUser}
+            />
+            <Button variant='contained' sx={{ml:0.5, my:2}} onClick={createDialog.openDialog}>Create</Button>
             <UsersDataGrid
-                rows={users}
+                loading={users.isLoading}
+                rows={rows}
                 columns={columns}
                 pageSizeOptions={pageSizeOptions}
                 onRowClick={detailsDialog.openDialog}
             />
             {
-                detailsDialog.isOpen && detailsDialog.selectedUser && (
+                detailsDialog.isOpen && detailsDialog.selectedUserRow && (
                     <UserDetailsDialog
-                        user={detailsDialog.selectedUser}
+                        userRow={detailsDialog.selectedUserRow}
                         open={detailsDialog.isOpen}
                         onClose={detailsDialog.closeDialog}
                     />
                 )
             }
             {
-                editDialog.isOpen && editDialog.selectedUser && (
+                editDialog.isOpen && editDialog.selectedUserRow && (
                     <UserEditDialog
-                        user={editDialog.selectedUser}
+                        userRow={editDialog.selectedUserRow}
                         open={editDialog.isOpen}
                         onClose={editDialog.closeDialog}
-                        onConfirm={editDialog.handleConfirmEdit}
+                        onConfirm={users.setEditedUser}
                     />
                 )
             }
             {
-                deleteDialog.isOpen && deleteDialog.selectedUser && (
+                deleteDialog.isOpen && deleteDialog.selectedUserRow && (
                     <UserDeleteDialog
-                        user={deleteDialog.selectedUser}
+                        userId={deleteDialog.selectedUserRow?.id}
                         open={deleteDialog.isOpen}
                         onClose={deleteDialog.closeDialog}
-                        onConfirm={deleteDialog.handleConfirmDelete}
+                        onConfirm={users.deleteUserFromState}
                     />
                 )
             }

@@ -32,7 +32,7 @@ export const TopBar: React.FC<TopBarProps> = ({ open, toggleDrawer }) => {
             >
                 <TopBarMenuButton open={open} toggleDrawer={toggleDrawer} />
                 <TopBarHeader />
-                <Button variant="text" onClick={logout}>Sign out</Button>
+                <Button variant="text" onClick={logout} sx={{color: 'white'}}>Sign out</Button>
             </Toolbar>
         </AppBar>
     );

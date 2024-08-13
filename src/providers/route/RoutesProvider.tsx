@@ -7,7 +7,7 @@ import {APP_ROUTES} from "../../shared/variables/appRoutes.ts";
 
 import Layout from "../../layout/Layout.tsx";
 import {ProtectedRoute} from "./components/ProtectedRoute.tsx";
-import UsersTable from "../../features/users/components/UsersTable.tsx";
+import UsersPage from "../../features/users/components/UsersPage.tsx";
 
 export default function RoutesProvider() {
     return(
@@ -19,7 +19,7 @@ export default function RoutesProvider() {
                     <Layout />
                 </ProtectedRoute>
             }>
-                <Route path={APP_ROUTES.USERS} element={<UsersTable />} />
+                <Route path={APP_ROUTES.USERS} element={<UsersPage />} />
                 {/*<Route path={APP_ROUTES.HOME} element={<Layout />}>*/}
                 {/*    <Route path={APP_ROUTES.HOME} element={<Example />} />*/}
                 {/*    <Route path={APP_ROUTES.USERS} element={<UsersTable />} />*/}

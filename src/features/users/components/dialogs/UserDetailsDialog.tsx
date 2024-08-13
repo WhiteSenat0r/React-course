@@ -3,15 +3,15 @@ import {Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import {IUser} from "../../types/interfaces/iUser.ts";
+import {IUserTableRow} from "../../types/interfaces/iUserTableRow.ts";
 
 interface UserDetailsDialogProps {
-    user: IUser;
+    userRow: IUserTableRow;
     open: boolean;
     onClose: () => void;
 }
 
-const UserDetailsDialog: React.FC<UserDetailsDialogProps> = ({ user, open, onClose }) => {
+const UserDetailsDialog: React.FC<UserDetailsDialogProps> = ({ userRow, open, onClose }) => {
     return (
         <Dialog
             open={open}
@@ -22,10 +22,10 @@ const UserDetailsDialog: React.FC<UserDetailsDialogProps> = ({ user, open, onClo
             <DialogTitle id="details-dialog-title">User details</DialogTitle>
             <DialogContent>
                 <Box id="details-dialog-description">
-                    <Typography>ID: {user.id}</Typography>
-                    <Typography>First name: {user.first_name}</Typography>
-                    <Typography>Last name: {user.last_name}</Typography>
-                    <Typography>Email: {user.email}</Typography>
+                    <Typography>ID: {userRow.id}</Typography>
+                    <Typography>First name: {userRow.firstName}</Typography>
+                    <Typography>Last name: {userRow.lastName}</Typography>
+                    <Typography>Email: {userRow.email}</Typography>
                 </Box>
             </DialogContent>
             <DialogActions>

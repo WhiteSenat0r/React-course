@@ -11,7 +11,6 @@ interface UserCreateDialogProps {
     open: boolean;
     onClose: () => void;
     onConfirm: () => void;
-    itemsQuantity: number;
 }
 
 const UserCreateDialog: React.FC<UserCreateDialogProps> = ({users, open, onClose, onConfirm }) => {
@@ -25,8 +24,8 @@ const UserCreateDialog: React.FC<UserCreateDialogProps> = ({users, open, onClose
 
         const createdUser: IUser = {
             id: sortedUsers[0].id + 1,
-            first_name: data.get('first_name') as string,
-            last_name: data.get('last_name') as string,
+            first_name: data.get('firstName') as string,
+            last_name: data.get('lastName') as string,
             email: data.get('email') as string,
         };
 
@@ -49,15 +48,15 @@ const UserCreateDialog: React.FC<UserCreateDialogProps> = ({users, open, onClose
                 <DialogContent>
                     <TextField
                         fullWidth
-                        id="first_name"
-                        name="first_name"
+                        id="firstName"
+                        name="firstName"
                         label="First name"
                         margin="normal"
                     />
                     <TextField
                         fullWidth
-                        id="last_name"
-                        name="last_name"
+                        id="lastName"
+                        name="lastName"
                         label="Last name"
                         margin="normal"
                     />

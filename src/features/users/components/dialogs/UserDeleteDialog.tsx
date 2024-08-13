@@ -3,23 +3,23 @@ import Button from "@mui/material/Button";
 
 import React from "react";
 import {useDeleteUser} from "../../hooks/useDeleteUser.ts";
-import {IUser} from "../../types/interfaces/iUser.ts";
 
 interface UserDeleteDialogProps {
-    user: IUser;
+    userId: number;
     open: boolean;
     onClose: () => void;
-    onConfirm: () => void;
+    onConfirm: (userId: number) => void;
 }
 
-const UserDeleteDialog: React.FC<UserDeleteDialogProps> = ({ user, open, onClose, onConfirm }) => {
+const UserDeleteDialog: React.FC<UserDeleteDialogProps> = ({ userId, open, onClose, onConfirm }) => {
     const handleDeleteUser = useDeleteUser();
 
     const removeUser = async () => {
-        const removalResult = await handleDeleteUser(user.id);
+        const removalResult = await handleDeleteUser(userId);
 
         if (removalResult) {
-            onConfirm();
+            onConfirm(userId);
+            onClose();
         }
     }
 
@@ -33,7 +33,7 @@ const UserDeleteDialog: React.FC<UserDeleteDialogProps> = ({ user, open, onClose
             <DialogTitle id="delete-dialog-title">Confirm Deletion</DialogTitle>
             <DialogContent>
                 <DialogContentText id="delete-dialog-description">
-                    Are you sure you want to delete the user {user.first_name} {user.last_name}?
+                    Are you sure you want to delete this user?
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

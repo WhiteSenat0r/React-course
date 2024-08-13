@@ -5,15 +5,16 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {useEditUser} from "../../hooks/useEditUser.ts";
+import {IUserTableRow} from "../../types/interfaces/iUserTableRow.ts";
 
 interface UserEditDialogProps {
-    user: IUser;
+    userRow: IUserTableRow;
     open: boolean;
     onClose: () => void;
-    onConfirm: () => void;
+    onConfirm: (user: IUser) => void;
 }
 
-const UserEditDialog: React.FC<UserEditDialogProps> = ({ user, open, onClose, onConfirm }) => {
+const UserEditDialog: React.FC<UserEditDialogProps> = ({ userRow, open, onClose, onConfirm }) => {
     const handleEditUser = useEditUser();
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,9 +23,9 @@ const UserEditDialog: React.FC<UserEditDialogProps> = ({ user, open, onClose, on
         const data = new FormData(e.currentTarget);
 
         const updatedUser: IUser = {
-            id: user.id,
-            first_name: data.get('first_name') as string,
-            last_name: data.get('last_name') as string,
+            id: userRow.id,
+            first_name: data.get('firstName') as string,
+            last_name: data.get('lastName') as string,
             email: data.get('email') as string,
         };
 
@@ -47,18 +48,18 @@ const UserEditDialog: React.FC<UserEditDialogProps> = ({ user, open, onClose, on
                 <DialogContent>
                     <TextField
                         fullWidth
-                        id="first_name"
-                        name="first_name"
+                        id="firstName"
+                        name="firstName"
                         label="First name"
-                        defaultValue={user.first_name}
+                        defaultValue={userRow.firstName}
                         margin="normal"
                     />
                     <TextField
                         fullWidth
-                        id="last_name"
-                        name="last_name"
+                        id="lastName"
+                        name="lastName"
                         label="Last name"
-                        defaultValue={user.last_name}
+                        defaultValue={userRow.lastName}
                         margin="normal"
                     />
                     <TextField
@@ -66,7 +67,7 @@ const UserEditDialog: React.FC<UserEditDialogProps> = ({ user, open, onClose, on
                         id="email"
                         name="email"
                         label="Email"
-                        defaultValue={user.email}
+                        defaultValue={userRow.email}
                         margin="normal"
                     />
                 </DialogContent>

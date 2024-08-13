@@ -1,7 +1,7 @@
 import HttpService from "../../../shared/services/http/httpService.ts";
 
 import {AxiosRequestConfig, HttpStatusCode} from "axios";
-import {IUserCollection} from "../types/interfaces/iUserCollection.ts";
+import {IUserResponse} from "../types/interfaces/iUserResponse.ts";
 import {IUser} from "../types/interfaces/iUser.ts";
 
 const BASE_URL = "https://reqres.in/api";
@@ -13,7 +13,7 @@ export default class UsersHttpService extends HttpService {
         super(BASE_URL);
     }
 
-    async getUsers(): Promise<IUserCollection> {
+    async getUsers(): Promise<IUserResponse> {
         const config: AxiosRequestConfig = {
             method: 'GET',
             baseURL: BASE_URL,
@@ -23,14 +23,14 @@ export default class UsersHttpService extends HttpService {
             }
         };
 
-        const result: IUserCollection = {
+        const result: IUserResponse = {
             data: []
         }
 
         for (let i = 1; i < 3; i++) {
             config.params.page = i;
 
-            const response = await super.get<IUserCollection>(GET_USERS_ENDPOINT, config);
+            const response = await super.get<IUserResponse>(GET_USERS_ENDPOINT, config);
 
             const userCollection = response.data!.data;
             result.data = [...result.data, ...userCollection];

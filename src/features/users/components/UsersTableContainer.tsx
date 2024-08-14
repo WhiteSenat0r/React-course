@@ -6,17 +6,15 @@ import UserEditDialog from "./dialogs/UserEditDialog.tsx";
 import UserDeleteDialog from "./dialogs/UserDeleteDialog.tsx";
 import UserCreateDialog from "./dialogs/UserCreateDialog.tsx";
 import Button from "@mui/material/Button";
-import {useUsersState} from "../hooks/useUsersState.ts";
 import {useUsersTableRows} from "../hooks/useUsersTableRows.ts";
 import {useDialog} from "../hooks/useDialog.ts";
-import {useNotifications} from "@toolpad/core";
+import {useUsersState} from "../hooks/useUsersState.ts";
 
 const pageSizeOptions: number[] = [5, 10, 25];
 
 const UsersTableContainer: React.FC = () => {
-    const notifications = useNotifications();
-    const users = useUsersState(notifications);
-    const { rows } = useUsersTableRows(users.users);
+    const {users, setUsers, isLoading, setNewUser, setEditedUser, deleteUserFromState} = useUsersState();
+    const { rows } = useUsersTableRows(users);
 
     const createDialog = useDialog();
     const detailsDialog = useDialog();
@@ -28,15 +26,14 @@ const UsersTableContainer: React.FC = () => {
     return (
         <>
             <UserCreateDialog
-                users={users.users}
+                users={users}
                 open={createDialog.isOpen}
                 onClose={createDialog.closeDialog}
-                onConfirm={users.setNewUser}
-                notifications={notifications}
+                onConfirm={setNewUser}
             />
-            <Button variant='contained' sx={{ml:0.5, my:2}} onClick={createDialog.openDialog}>Create</Button>
+            <Button variant='contained' sx={{my:2}} onClick={createDialog.openDialog}>Create</Button>
             <UsersDataGrid
-                loading={users.isLoading}
+                loading={isLoading}
                 rows={rows}
                 columns={columns}
                 pageSizeOptions={pageSizeOptions}
@@ -57,8 +54,7 @@ const UsersTableContainer: React.FC = () => {
                         userRow={editDialog.selectedUserRow}
                         open={editDialog.isOpen}
                         onClose={editDialog.closeDialog}
-                        onConfirm={users.setEditedUser}
-                        notifications={notifications}
+                        onConfirm={setEditedUser}
                     />
                 )
             }
@@ -68,8 +64,7 @@ const UsersTableContainer: React.FC = () => {
                         userId={deleteDialog.selectedUserRow?.id}
                         open={deleteDialog.isOpen}
                         onClose={deleteDialog.closeDialog}
-                        onConfirm={users.deleteUserFromState}
-                        notifications={notifications}
+                        onConfirm={deleteUserFromState}
                     />
                 )
             }

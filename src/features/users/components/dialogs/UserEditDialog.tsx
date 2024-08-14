@@ -1,11 +1,11 @@
-import {IUser} from "../../types/interfaces/iUser.ts";
+import {IUser} from "../../interfaces/iUser.ts";
 import React from "react";
 import {Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {useEditUser} from "../../hooks/useEditUser.ts";
-import {IUserTableRow} from "../../types/interfaces/iUserTableRow.ts";
+import {IUserTableRow} from "../../interfaces/iUserTableRow.ts";
 import {useNotifications} from "@toolpad/core";
 
 interface UserEditDialogProps {
@@ -13,11 +13,11 @@ interface UserEditDialogProps {
     open: boolean;
     onClose: () => void;
     onConfirm: (user: IUser) => void;
-    notifications: ReturnType<typeof useNotifications>;
 }
 
-const UserEditDialog: React.FC<UserEditDialogProps> = ({ userRow, open, onClose, onConfirm, notifications }) => {
+const UserEditDialog: React.FC<UserEditDialogProps> = ({ userRow, open, onClose, onConfirm }) => {
     const handleEditUser = useEditUser();
+    const notifications = useNotifications();
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

@@ -67,7 +67,6 @@ abstract class HttpService {
         return {
             status: axiosResponse.status,
             data: axiosResponse.data,
-            error: undefined,
         };
     }
 

@@ -1,5 +1,5 @@
 import UsersHttpService from "../services/usersHttpService.ts";
-import {IUser} from "../types/interfaces/iUser.ts";
+import {IUser} from "../interfaces/iUser.ts";
 
 export const useCreateUser = () => {
     const usersHttpService = new UsersHttpService();

@@ -9,12 +9,13 @@ import Button from "@mui/material/Button";
 import {useUsersState} from "../hooks/useUsersState.ts";
 import {useUsersTableRows} from "../hooks/useUsersTableRows.ts";
 import {useDialog} from "../hooks/useDialog.ts";
+import {useNotifications} from "@toolpad/core";
 
 const pageSizeOptions: number[] = [5, 10, 25];
 
 const UsersTableContainer: React.FC = () => {
-
-    const users = useUsersState();
+    const notifications = useNotifications();
+    const users = useUsersState(notifications);
     const { rows } = useUsersTableRows(users.users);
 
     const createDialog = useDialog();
@@ -31,6 +32,7 @@ const UsersTableContainer: React.FC = () => {
                 open={createDialog.isOpen}
                 onClose={createDialog.closeDialog}
                 onConfirm={users.setNewUser}
+                notifications={notifications}
             />
             <Button variant='contained' sx={{ml:0.5, my:2}} onClick={createDialog.openDialog}>Create</Button>
             <UsersDataGrid
@@ -56,6 +58,7 @@ const UsersTableContainer: React.FC = () => {
                         open={editDialog.isOpen}
                         onClose={editDialog.closeDialog}
                         onConfirm={users.setEditedUser}
+                        notifications={notifications}
                     />
                 )
             }
@@ -66,6 +69,7 @@ const UsersTableContainer: React.FC = () => {
                         open={deleteDialog.isOpen}
                         onClose={deleteDialog.closeDialog}
                         onConfirm={users.deleteUserFromState}
+                        notifications={notifications}
                     />
                 )
             }

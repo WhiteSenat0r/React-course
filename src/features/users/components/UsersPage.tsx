@@ -4,8 +4,6 @@ import { Box, Typography } from "@mui/material";
 
 import UsersTableContainer from "./UsersTableContainer.tsx";
 
-// TODO Rename to  Users page
-
 const UsersPage: React.FC = () => {
     return (
         <Box>

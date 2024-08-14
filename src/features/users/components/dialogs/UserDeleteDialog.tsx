@@ -3,15 +3,17 @@ import Button from "@mui/material/Button";
 
 import React from "react";
 import {useDeleteUser} from "../../hooks/useDeleteUser.ts";
+import {useNotifications} from "@toolpad/core";
 
 interface UserDeleteDialogProps {
     userId: number;
     open: boolean;
     onClose: () => void;
     onConfirm: (userId: number) => void;
+    notifications: ReturnType<typeof useNotifications>;
 }
 
-const UserDeleteDialog: React.FC<UserDeleteDialogProps> = ({ userId, open, onClose, onConfirm }) => {
+const UserDeleteDialog: React.FC<UserDeleteDialogProps> = ({ userId, open, onClose, onConfirm, notifications }) => {
     const handleDeleteUser = useDeleteUser();
 
     const removeUser = async () => {
@@ -20,6 +22,16 @@ const UserDeleteDialog: React.FC<UserDeleteDialogProps> = ({ userId, open, onClo
         if (removalResult) {
             onConfirm(userId);
             onClose();
+            notifications.show('User was deleted successfully!', {
+                severity: 'success',
+                autoHideDuration: 3000,
+            });
+        }
+        else {
+            notifications.show('Error occurred during user creation!', {
+                severity: 'error',
+                autoHideDuration: 3000,
+            });
         }
     }
 

@@ -6,15 +6,17 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {useEditUser} from "../../hooks/useEditUser.ts";
 import {IUserTableRow} from "../../types/interfaces/iUserTableRow.ts";
+import {useNotifications} from "@toolpad/core";
 
 interface UserEditDialogProps {
     userRow: IUserTableRow;
     open: boolean;
     onClose: () => void;
     onConfirm: (user: IUser) => void;
+    notifications: ReturnType<typeof useNotifications>;
 }
 
-const UserEditDialog: React.FC<UserEditDialogProps> = ({ userRow, open, onClose, onConfirm }) => {
+const UserEditDialog: React.FC<UserEditDialogProps> = ({ userRow, open, onClose, onConfirm, notifications }) => {
     const handleEditUser = useEditUser();
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,6 +36,16 @@ const UserEditDialog: React.FC<UserEditDialogProps> = ({ userRow, open, onClose,
         if (result) {
             onConfirm(updatedUser);
             onClose();
+            notifications.show('User was edited successfully!', {
+                severity: 'success',
+                autoHideDuration: 3000,
+            });
+        }
+        else {
+            notifications.show('Error occurred during user edition!', {
+                severity: 'error',
+                autoHideDuration: 3000,
+            });
         }
     };
 

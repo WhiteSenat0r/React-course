@@ -14,16 +14,12 @@ export default function RoutesProvider() {
         <Routes>
             <Route path={APP_ROUTES.SIGN_IN} element={<SignInForm /> } />
 
-            <Route path={APP_ROUTES.HOME} element={
+            <Route path={APP_ROUTES.USERS} element={
                 <ProtectedRoute protectedRoute>
                     <Layout />
                 </ProtectedRoute>
             }>
                 <Route path={APP_ROUTES.USERS} element={<UsersPage />} />
-                {/*<Route path={APP_ROUTES.HOME} element={<Layout />}>*/}
-                {/*    <Route path={APP_ROUTES.HOME} element={<Example />} />*/}
-                {/*    <Route path={APP_ROUTES.USERS} element={<UsersTable />} />*/}
-                {/*</Route>*/}
             </Route>
 
             <Route path="*" element={<NotFound />} />

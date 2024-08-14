@@ -5,16 +5,19 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import {useCreateUser} from "../../hooks/useCreateUser.ts";
+import {useNotifications} from "@toolpad/core";
 
 interface UserCreateDialogProps {
     users: IUser[];
     open: boolean;
     onClose: () => void;
-    onConfirm: () => void;
+    onConfirm: (user: IUser) => void;
+    notifications: ReturnType<typeof useNotifications>;
 }
 
-const UserCreateDialog: React.FC<UserCreateDialogProps> = ({users, open, onClose, onConfirm }) => {
+const UserCreateDialog: React.FC<UserCreateDialogProps> = ({users, open, onClose, onConfirm, notifications }) => {
     const handleCreateUser = useCreateUser();
+
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -34,6 +37,16 @@ const UserCreateDialog: React.FC<UserCreateDialogProps> = ({users, open, onClose
         if (result) {
             onConfirm(createdUser);
             onClose();
+            notifications.show('User was created successfully!', {
+                severity: 'success',
+                autoHideDuration: 3000,
+            });
+        }
+        else {
+            notifications.show('Error occurred during user creation!', {
+                severity: 'error',
+                autoHideDuration: 3000,
+            });
         }
     };
 

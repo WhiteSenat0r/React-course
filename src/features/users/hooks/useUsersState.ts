@@ -2,8 +2,9 @@ import {useCallback, useEffect, useState} from "react";
 import {IUser} from "../types/interfaces/iUser.ts";
 import UsersHttpService from "../services/usersHttpService.ts";
 import {IUserResponse} from "../types/interfaces/iUserResponse.ts";
+import {useNotifications} from "@toolpad/core";
 
-export const useUsersState = () => {
+export const useUsersState = (notifications: ReturnType<typeof useNotifications>) => {
     const [users, setUsers] = useState<IUser[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -19,6 +20,10 @@ export const useUsersState = () => {
             }
             finally {
                 setIsLoading(false);
+                notifications.show('Users were successfully loaded!', {
+                    severity: 'info',
+                    autoHideDuration: 3000,
+                });
             }
         };
 

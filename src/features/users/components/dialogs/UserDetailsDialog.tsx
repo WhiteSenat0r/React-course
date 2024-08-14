@@ -3,7 +3,7 @@ import {Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import {IUserTableRow} from "../../types/interfaces/iUserTableRow.ts";
+import {IUserTableRow} from "../../interfaces/iUserTableRow.ts";
 
 interface UserDetailsDialogProps {
     userRow: IUserTableRow;

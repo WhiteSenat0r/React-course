@@ -13,6 +13,7 @@ import {SignInAuthErrorAlert} from "./SignInAuthErrorAlert.tsx";
 
 export default function SignInForm() {
     const { isAuthenticated, handleSignIn } = useAuth();
+
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [password, setPassword] = useState('');
@@ -50,7 +51,9 @@ export default function SignInForm() {
                     setPassword={setPassword}
                     passwordError={passwordError}
                     setPasswordError={setPasswordError} />
-                <SignInAuthErrorAlert isAuthenticated={isAuthenticated}/>
+                {
+                   !isAuthenticated && (<SignInAuthErrorAlert />)
+                }
                 <Button
                     type="submit"
                     fullWidth

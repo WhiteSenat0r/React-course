@@ -10,11 +10,11 @@ interface UserDeleteDialogProps {
     open: boolean;
     onClose: () => void;
     onConfirm: (userId: number) => void;
-    notifications: ReturnType<typeof useNotifications>;
 }
 
-const UserDeleteDialog: React.FC<UserDeleteDialogProps> = ({ userId, open, onClose, onConfirm, notifications }) => {
+const UserDeleteDialog: React.FC<UserDeleteDialogProps> = ({ userId, open, onClose, onConfirm }) => {
     const handleDeleteUser = useDeleteUser();
+    const notifications = useNotifications();
 
     const removeUser = async () => {
         const removalResult = await handleDeleteUser(userId);

@@ -1,6 +1,6 @@
 import {useMemo} from "react";
-import {IUserTableRow} from "../types/interfaces/iUserTableRow.ts";
-import {IUser} from "../types/interfaces/iUser.ts";
+import {IUserTableRow} from "../interfaces/iUserTableRow.ts";
+import {IUser} from "../interfaces/iUser.ts";
 
 export const useUsersTableRows = (users: IUser[]) => {
     const rows: IUserTableRow[] = useMemo(() => {

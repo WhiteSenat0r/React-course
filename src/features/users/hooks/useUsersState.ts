@@ -1,12 +1,14 @@
-import {useCallback, useEffect, useState} from "react";
-import {IUser} from "../types/interfaces/iUser.ts";
+import {useCallback, useEffect, useMemo, useState} from "react";
+import {IUser} from "../interfaces/iUser.ts";
 import UsersHttpService from "../services/usersHttpService.ts";
-import {IUserResponse} from "../types/interfaces/iUserResponse.ts";
+import {IUserResponse} from "../interfaces/iUserResponse.ts";
 import {useNotifications} from "@toolpad/core";
 
-export const useUsersState = (notifications: ReturnType<typeof useNotifications>) => {
+export const useUsersState = () => {
     const [users, setUsers] = useState<IUser[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const notifications = useNotifications();
+
 
     useEffect(() => {
         const usersHttpService = new UsersHttpService();
@@ -50,5 +52,9 @@ export const useUsersState = (notifications: ReturnType<typeof useNotifications>
         }));
     }, []);
 
-    return {users, setUsers, isLoading, setNewUser, setEditedUser, deleteUserFromState};
+    const memoizedUser = useMemo(() => {
+        return users;
+    }, [users]);
+
+    return {users: memoizedUser, setUsers, isLoading, setNewUser, setEditedUser, deleteUserFromState};
 }

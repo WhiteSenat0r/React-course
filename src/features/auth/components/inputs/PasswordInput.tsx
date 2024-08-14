@@ -15,7 +15,9 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({password, setPasswo
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newPassword = e.target.value;
+
         setPassword(newPassword);
+
         if (!validatePassword(newPassword)) {
             setPasswordError('Password is required');
         } else {

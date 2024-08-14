@@ -1,5 +1,5 @@
 import React from "react";
-import {IUser} from "../../types/interfaces/iUser.ts";
+import {IUser} from "../../interfaces/iUser.ts";
 import {Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -12,12 +12,11 @@ interface UserCreateDialogProps {
     open: boolean;
     onClose: () => void;
     onConfirm: (user: IUser) => void;
-    notifications: ReturnType<typeof useNotifications>;
 }
 
-const UserCreateDialog: React.FC<UserCreateDialogProps> = ({users, open, onClose, onConfirm, notifications }) => {
+const UserCreateDialog: React.FC<UserCreateDialogProps> = ({users, open, onClose, onConfirm }) => {
     const handleCreateUser = useCreateUser();
-
+    const notifications = useNotifications();
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

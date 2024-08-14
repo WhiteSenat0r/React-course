@@ -1,6 +1,7 @@
 import React, {memo} from "react";
 import {DataGrid, GridColDef, GridRowParams} from "@mui/x-data-grid";
-import {IUserTableRow} from "../types/interfaces/iUserTableRow.ts";
+import {IUserTableRow} from "../interfaces/iUserTableRow.ts";
+import {isDeepEqual} from "@mui/x-data-grid/internals";
 
 interface UsersDataGridProps {
     rows: IUserTableRow[];
@@ -39,6 +40,14 @@ const UsersDataGridComponent: React.FC<UsersDataGridProps> = ({ rows, columns, p
     );
 };
 
-const UsersDataGrid = memo(UsersDataGridComponent);
+const UsersDataGrid = memo(UsersDataGridComponent,
+    (prevProps, nextProps) => {
+
+    return isDeepEqual(prevProps.rows, nextProps.rows) &&
+        isDeepEqual(prevProps.columns, nextProps.columns) &&
+        isDeepEqual(prevProps.pageSizeOptions, nextProps.pageSizeOptions) &&
+        isDeepEqual(prevProps.onRowClick, nextProps.onRowClick) &&
+        prevProps.loading === nextProps.loading;
+});
 
 export default UsersDataGrid;

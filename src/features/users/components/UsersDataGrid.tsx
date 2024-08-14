@@ -1,7 +1,6 @@
-import React, {memo} from "react";
+import React, {memo, useCallback} from "react";
 import {DataGrid, GridColDef, GridRowParams} from "@mui/x-data-grid";
 import {IUserTableRow} from "../interfaces/iUserTableRow.ts";
-import {isDeepEqual} from "@mui/x-data-grid/internals";
 
 interface UsersDataGridProps {
     rows: IUserTableRow[];
@@ -12,9 +11,9 @@ interface UsersDataGridProps {
 }
 
 const UsersDataGridComponent: React.FC<UsersDataGridProps> = ({ rows, columns, pageSizeOptions, onRowClick, loading }) => {
-    const handleRowClick = (params: GridRowParams) => {
+    const handleRowClick = useCallback((params: GridRowParams) => {
         onRowClick(params.row as IUserTableRow);
-    };
+    }, [onRowClick]);
 
     return (
         <DataGrid
@@ -40,14 +39,6 @@ const UsersDataGridComponent: React.FC<UsersDataGridProps> = ({ rows, columns, p
     );
 };
 
-const UsersDataGrid = memo(UsersDataGridComponent,
-    (prevProps, nextProps) => {
-
-    return isDeepEqual(prevProps.rows, nextProps.rows) &&
-        isDeepEqual(prevProps.columns, nextProps.columns) &&
-        isDeepEqual(prevProps.pageSizeOptions, nextProps.pageSizeOptions) &&
-        isDeepEqual(prevProps.onRowClick, nextProps.onRowClick) &&
-        prevProps.loading === nextProps.loading;
-});
+const UsersDataGrid = memo(UsersDataGridComponent);
 
 export default UsersDataGrid;

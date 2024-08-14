@@ -9,11 +9,16 @@ import Button from "@mui/material/Button";
 import {useUsersTableRows} from "../hooks/useUsersTableRows.ts";
 import {useDialog} from "../hooks/useDialog.ts";
 import {useUsersState} from "../hooks/useUsersState.ts";
-
-const pageSizeOptions: number[] = [5, 10, 25];
+import {IPaginationModel} from "../interfaces/iPaginationModel.ts";
 
 const UsersTableContainer: React.FC = () => {
-    const {users, setUsers, isLoading, setNewUser, setEditedUser, deleteUserFromState} = useUsersState();
+    const [paginationModel, setPaginationModel] = React.useState<IPaginationModel>({
+        page: 0,
+        pageSize: 6,
+        rowCount: 0
+    });
+
+    const {users, setUsers, isLoading, setNewUser, setEditedUser, deleteUserFromState} = useUsersState(paginationModel, setPaginationModel);
     const { rows } = useUsersTableRows(users);
 
     const createDialog = useDialog();
@@ -36,7 +41,8 @@ const UsersTableContainer: React.FC = () => {
                 loading={isLoading}
                 rows={rows}
                 columns={columns}
-                pageSizeOptions={pageSizeOptions}
+                paginationModel={paginationModel}
+                setPaginationModel={setPaginationModel}
                 onRowClick={detailsDialog.openDialog}
             />
             {

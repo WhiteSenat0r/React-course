@@ -3,6 +3,7 @@ import HttpService from "../../../shared/services/http/httpService.ts";
 import {AxiosRequestConfig, HttpStatusCode} from "axios";
 import {IUserResponse} from "../interfaces/iUserResponse.ts";
 import {IUser} from "../interfaces/iUser.ts";
+import {IPaginationModel} from "../interfaces/iPaginationModel.ts";
 
 const BASE_URL = "https://reqres.in/api";
 const USERS_ENDPOINT = "/users";
@@ -13,30 +14,27 @@ export default class UsersHttpService extends HttpService {
         super(BASE_URL);
     }
 
-    // TODO Implement server-side pagination
+    async getUsers(paginationModel: IPaginationModel): Promise<IUserResponse> {
+        const pageNumber = paginationModel.page + 1;
 
-    async getUsers(): Promise<IUserResponse> {
         const config: AxiosRequestConfig = {
             method: 'GET',
             baseURL: BASE_URL,
             url: USERS_ENDPOINT,
             params: {
-                page: 0,
+                page: pageNumber,
             }
         };
 
         const result: IUserResponse = {
-            data: []
+            data: [],
+            total: 0,
         }
 
-        for (let i = 1; i < 3; i++) {
-            config.params.page = i;
+        const response = await super.get<IUserResponse>(USERS_ENDPOINT, config);
 
-            const response = await super.get<IUserResponse>(USERS_ENDPOINT, config);
-
-            const userCollection = response.data!.data;
-            result.data = [...result.data, ...userCollection];
-        }
+        result.data = [...result.data, ...response.data!.data];
+        result.total = response.data.total;
 
         return result;
     }

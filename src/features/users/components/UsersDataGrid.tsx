@@ -1,16 +1,18 @@
 import React, {memo, useCallback} from "react";
 import {DataGrid, GridColDef, GridRowParams} from "@mui/x-data-grid";
 import {IUserTableRow} from "../interfaces/iUserTableRow.ts";
+import {IPaginationModel} from "../interfaces/iPaginationModel.ts";
 
 interface UsersDataGridProps {
     rows: IUserTableRow[];
     columns: GridColDef[];
-    pageSizeOptions: number[];
+    paginationModel: IPaginationModel;
+    setPaginationModel: (paginationModel: IPaginationModel) => void;
     onRowClick: (params: IUserTableRow) => void;
     loading: boolean;
 }
 
-const UsersDataGridComponent: React.FC<UsersDataGridProps> = ({ rows, columns, pageSizeOptions, onRowClick, loading }) => {
+const UsersDataGridComponent: React.FC<UsersDataGridProps> = ({ rows, columns, paginationModel, setPaginationModel, onRowClick, loading }) => {
     const handleRowClick = useCallback((params: GridRowParams) => {
         onRowClick(params.row as IUserTableRow);
     }, [onRowClick]);
@@ -24,16 +26,14 @@ const UsersDataGridComponent: React.FC<UsersDataGridProps> = ({ rows, columns, p
             }}
             autoHeight
             pagination
-            pageSizeOptions={pageSizeOptions}
             rows={rows}
+            rowCount={paginationModel.rowCount}
             columns={columns}
             onRowClick={handleRowClick}
             disableRowSelectionOnClick
-            initialState={{
-                pagination: {
-                    paginationModel: { pageSize: pageSizeOptions[0], page: 0 },
-                },
-            }}
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
+            paginationMode='server'
             loading={loading}
         />
     );

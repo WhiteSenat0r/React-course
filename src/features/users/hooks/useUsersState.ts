@@ -3,12 +3,11 @@ import {IUser} from "../interfaces/iUser.ts";
 import UsersHttpService from "../services/usersHttpService.ts";
 import {IUserResponse} from "../interfaces/iUserResponse.ts";
 import {useNotifications} from "@toolpad/core";
+import {IPaginationModel} from "../interfaces/iPaginationModel.ts";
 
-export const useUsersState = () => {
+export const useUsersState = (paginationModel : IPaginationModel, setPaginationModel: (paginationModel : IPaginationModel) => void) => {
     const [users, setUsers] = useState<IUser[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const notifications = useNotifications();
-
 
     useEffect(() => {
         const usersHttpService = new UsersHttpService();
@@ -16,24 +15,23 @@ export const useUsersState = () => {
         setIsLoading(true);
 
         const fetch = async () => {
-            try {
-                const users: IUserResponse = await usersHttpService.getUsers();
-                setUsers(users.data);
-            }
-            finally {
-                setIsLoading(false);
-                notifications.show('Users were successfully loaded!', {
-                    severity: 'info',
-                    autoHideDuration: 3000,
-                });
-            }
+            const userResponse: IUserResponse = await usersHttpService.getUsers(paginationModel);
+            setUsers(userResponse.data);
+
+            const updatedPaginationModel: IPaginationModel = {
+                page: paginationModel.page,
+                pageSize: paginationModel.pageSize,
+                rowCount: userResponse.total
+            };
+            setPaginationModel(updatedPaginationModel)
+            setIsLoading(false);
         };
 
         fetch();
-    }, []);
+    }, [paginationModel.page, paginationModel.pageSize]);
 
     const setNewUser = useCallback((user: IUser) => {
-        setUsers((prev) => [...prev, user]);
+        setUsers((prev) => [user, ...prev]);
     }, []);
 
     const setEditedUser = useCallback((user: IUser) => {

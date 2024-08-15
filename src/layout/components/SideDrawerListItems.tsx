@@ -9,9 +9,9 @@ export const SideDrawerListItems = (
     <>
         <ListItemButton component={Link} to={APP_ROUTES.USERS}>
             <ListItemIcon>
-                <PersonIcon />
+                <PersonIcon/>
             </ListItemIcon>
-            <ListItemText primary="Users" />
+            <ListItemText primary="Users"/>
         </ListItemButton>
     </>
 );

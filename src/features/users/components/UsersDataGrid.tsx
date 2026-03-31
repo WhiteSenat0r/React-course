@@ -1,5 +1,5 @@
 import React, {memo, useCallback} from "react";
-import {DataGrid, GridColDef, GridRowParams} from "@mui/x-data-grid";
+import {DataGrid, GridColDef, GridPaginationModel, GridRowParams} from "@mui/x-data-grid";
 import {IUserTableRow} from "../interfaces/iUserTableRow.ts";
 import {IPaginationModel} from "../interfaces/iPaginationModel.ts";
 
@@ -17,6 +17,14 @@ const UsersDataGridComponent: React.FC<UsersDataGridProps> = ({ rows, columns, p
         onRowClick(params.row as IUserTableRow);
     }, [onRowClick]);
 
+    const handlePaginationChange = useCallback((model: GridPaginationModel) => {
+        setPaginationModel({
+            ...paginationModel,
+            page: model.page,
+            pageSize: model.pageSize,
+        });
+    }, [paginationModel, setPaginationModel]);
+
     return (
         <DataGrid
             sx={{
@@ -32,7 +40,7 @@ const UsersDataGridComponent: React.FC<UsersDataGridProps> = ({ rows, columns, p
             onRowClick={handleRowClick}
             disableRowSelectionOnClick
             paginationModel={paginationModel}
-            onPaginationModelChange={setPaginationModel}
+            onPaginationModelChange={handlePaginationChange}
             paginationMode='server'
             loading={loading}
         />

@@ -29,12 +29,18 @@ export default class UsersHttpService extends HttpService {
         const result: IUserResponse = {
             data: [],
             total: 0,
+            page: pageNumber,
+            per_page: paginationModel.pageSize,
         }
 
         const response = await super.get<IUserResponse>(USERS_ENDPOINT, config);
 
-        result.data = [...result.data, ...response.data!.data];
-        result.total = response.data.total;
+        if (response.data) {
+            result.data = [...result.data, ...response.data.data];
+            result.total = response.data.total;
+            result.page = response.data.page;
+            result.per_page = response.data.per_page;
+        }
 
         return result;
     }

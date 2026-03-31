@@ -6,8 +6,10 @@ export const useDialog = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedUserRow, setSelectedUserRow] = useState<IUserTableRow | null>(null);
 
-    const openDialog = useCallback((userRow: IUserTableRow) => {
-        setSelectedUserRow(userRow);
+    const openDialog = useCallback((userRow?: IUserTableRow) => {
+        if (userRow) {
+            setSelectedUserRow(userRow);
+        }
         setIsOpen(true);
     }, []);
 

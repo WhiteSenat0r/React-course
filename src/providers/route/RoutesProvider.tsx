@@ -16,7 +16,7 @@ export default function RoutesProvider() {
         <Routes>
             <Route path={APP_ROUTES.SIGN_IN} element={<SignInForm /> } />
 
-            <Route path={APP_ROUTES.USERS} element={
+            <Route element={
                 <ProtectedRoute protectedRoute>
                     <Layout />
                 </ProtectedRoute>

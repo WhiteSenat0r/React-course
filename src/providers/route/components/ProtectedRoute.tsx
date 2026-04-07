@@ -1,4 +1,4 @@
-import React, {Fragment, ReactNode} from "react";
+import React, {ReactNode} from "react";
 
 import {APP_ROUTES} from "../../../shared/variables/appRoutes.ts";
 
@@ -10,7 +10,15 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ protectedRoute, children }) => {
-    const authStatus = localStorage.getItem("authStatus") === 'true';
+    let authStatus = false;
+
+    try {
+        authStatus = localStorage.getItem("authStatus") === 'true';
+    } catch (error) {
+        console.error('Error accessing localStorage for auth status:', error);
+        // Default to false (not authenticated) if localStorage is unavailable
+        authStatus = false;
+    }
 
     if (protectedRoute) {
         return authStatus ? <>{children}</> : <Navigate to={APP_ROUTES.SIGN_IN} />;

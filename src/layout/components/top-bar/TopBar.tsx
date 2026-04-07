@@ -20,8 +20,18 @@ export const TopBar: React.FC<TopBarProps> = ({ open, toggleDrawer }) => {
     const { role, clearRole } = useRole();
 
     const logout = () => {
-        localStorage.removeItem('authStatus');
-        clearRole();
+        try {
+            localStorage.removeItem('authStatus');
+        } catch (error) {
+            console.error('Error removing auth status from localStorage:', error);
+        }
+
+        try {
+            clearRole();
+        } catch (error) {
+            console.error('Error clearing role:', error);
+        }
+
         navigate(APP_ROUTES.SIGN_IN);
     }
 

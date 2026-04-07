@@ -26,13 +26,35 @@ const RoleSelectionDialog: React.FC<RoleSelectionDialogProps> = ({ open, email, 
     // Get suggested role based on email, default to USER
     const suggestedRole = EMAIL_ROLE_MAPPINGS[email] || Role.USER;
     const [selectedRole, setSelectedRole] = useState<Role>(suggestedRole);
+    const [error, setError] = useState<string>('');
 
     const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedRole(event.target.value as Role);
+        try {
+            const newRole = event.target.value as Role;
+            if (Object.values(Role).includes(newRole)) {
+                setSelectedRole(newRole);
+                setError('');
+            } else {
+                setError('Invalid role selected');
+            }
+        } catch (error) {
+            console.error('Error handling role change:', error);
+            setError('Error selecting role. Please try again.');
+        }
     };
 
     const handleConfirm = () => {
-        onRoleSelected(selectedRole);
+        try {
+            if (!selectedRole || !Object.values(Role).includes(selectedRole)) {
+                setError('Please select a valid role');
+                return;
+            }
+            onRoleSelected(selectedRole);
+            setError('');
+        } catch (error) {
+            console.error('Error confirming role:', error);
+            setError('Error confirming role. Please try again.');
+        }
     };
 
     const getRoleDescription = (role: Role): string => {
@@ -57,6 +79,13 @@ const RoleSelectionDialog: React.FC<RoleSelectionDialogProps> = ({ open, email, 
                         Please select your role to continue. Your permissions will be based on this selection.
                     </Typography>
                 </Box>
+                {error && (
+                    <Box sx={{ mb: 2 }}>
+                        <Typography variant="body2" color="error">
+                            {error}
+                        </Typography>
+                    </Box>
+                )}
                 <FormControl component="fieldset" fullWidth>
                     <FormLabel component="legend" sx={{ mb: 1 }}>Available Roles</FormLabel>
                     <RadioGroup value={selectedRole} onChange={handleRoleChange}>

@@ -20,7 +20,7 @@ const UsersTableContainer: React.FC = () => {
         rowCount: 0
     });
 
-    const {users, setUsers, isLoading, setNewUser, setEditedUser, deleteUserFromState} = useUsersState(paginationModel, setPaginationModel);
+    const {users, isLoading, setNewUser, setEditedUser, deleteUserFromState} = useUsersState(paginationModel, setPaginationModel);
     const { rows } = useUsersTableRows(users);
 
     const createDialog = useDialog();
@@ -28,11 +28,16 @@ const UsersTableContainer: React.FC = () => {
     const editDialog = useDialog();
     const deleteDialog = useDialog();
 
+    // Safely access permissions with fallback
+    const canEdit = permissions?.canEdit ?? false;
+    const canDelete = permissions?.canDelete ?? false;
+    const canCreate = permissions?.canCreate ?? false;
+
     const columns = useUsersTableColumns(
         editDialog.openDialogByClick,
         deleteDialog.openDialogByClick,
-        permissions.canEdit,
-        permissions.canDelete
+        canEdit,
+        canDelete
     );
 
     return (
@@ -43,7 +48,7 @@ const UsersTableContainer: React.FC = () => {
                 onClose={createDialog.closeDialog}
                 onConfirm={setNewUser}
             />
-            {permissions.canCreate && (
+            {canCreate && (
                 <Button variant='contained' sx={{my:2}} onClick={createDialog.openDialog}>Create</Button>
             )}
             <UsersDataGrid

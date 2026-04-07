@@ -10,9 +10,10 @@ import {EmailInput} from "./inputs/EmailInput.tsx";
 import {PasswordInput} from "./inputs/PasswordInput.tsx";
 
 import {SignInAuthErrorAlert} from "./SignInAuthErrorAlert.tsx";
+import RoleSelectionDialog from "./RoleSelectionDialog.tsx";
 
 export default function SignInForm() {
-    const { isAuthenticated, handleSignIn } = useAuth();
+    const { isAuthenticated, handleSignIn, showRoleSelection, userEmail, handleRoleSelected } = useAuth();
 
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -28,41 +29,48 @@ export default function SignInForm() {
     };
 
     return (
-        <Box
-             sx={{
-                 marginTop: 8,
-                 display: 'flex',
-                 flexDirection: 'column',
-                 alignItems: 'center',
-             }}
-        >
-            <Typography component="h1" variant="h5">
-                Sign in
-            </Typography>
-            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, maxWidth: 420 }}>
-                <EmailInput
-                    email={email}
-                    setEmail={setEmail}
-                    emailError={emailError}
-                    setEmailError={setEmailError}
-                />
-                <PasswordInput
-                    password={password}
-                    setPassword={setPassword}
-                    passwordError={passwordError}
-                    setPasswordError={setPasswordError} />
-                {
-                   !isAuthenticated && (<SignInAuthErrorAlert />)
-                }
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                >
-                    Sign In
-                </Button>
+        <>
+            <Box
+                 sx={{
+                     marginTop: 8,
+                     display: 'flex',
+                     flexDirection: 'column',
+                     alignItems: 'center',
+                 }}
+            >
+                <Typography component="h1" variant="h5">
+                    Sign in
+                </Typography>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, maxWidth: 420 }}>
+                    <EmailInput
+                        email={email}
+                        setEmail={setEmail}
+                        emailError={emailError}
+                        setEmailError={setEmailError}
+                    />
+                    <PasswordInput
+                        password={password}
+                        setPassword={setPassword}
+                        passwordError={passwordError}
+                        setPasswordError={setPasswordError} />
+                    {
+                       !isAuthenticated && (<SignInAuthErrorAlert />)
+                    }
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                    >
+                        Sign In
+                    </Button>
+                </Box>
             </Box>
-        </Box>
+            <RoleSelectionDialog
+                open={showRoleSelection}
+                email={userEmail}
+                onRoleSelected={handleRoleSelected}
+            />
+        </>
     );
 }

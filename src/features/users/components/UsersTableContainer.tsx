@@ -10,8 +10,10 @@ import {useUsersTableRows} from "../hooks/useUsersTableRows.ts";
 import {useDialog} from "../hooks/useDialog.ts";
 import {useUsersState} from "../hooks/useUsersState.ts";
 import {IPaginationModel} from "../interfaces/iPaginationModel.ts";
+import {useRole} from "../../../providers/role/hooks/useRole.ts";
 
 const UsersTableContainer: React.FC = () => {
+    const { permissions } = useRole();
     const [paginationModel, setPaginationModel] = React.useState<IPaginationModel>({
         page: 0,
         pageSize: 6,
@@ -26,7 +28,12 @@ const UsersTableContainer: React.FC = () => {
     const editDialog = useDialog();
     const deleteDialog = useDialog();
 
-    const columns = useUsersTableColumns(editDialog.openDialogByClick, deleteDialog.openDialogByClick);
+    const columns = useUsersTableColumns(
+        editDialog.openDialogByClick,
+        deleteDialog.openDialogByClick,
+        permissions.canEdit,
+        permissions.canDelete
+    );
 
     return (
         <>
@@ -36,7 +43,9 @@ const UsersTableContainer: React.FC = () => {
                 onClose={createDialog.closeDialog}
                 onConfirm={setNewUser}
             />
-            <Button variant='contained' sx={{my:2}} onClick={createDialog.openDialog}>Create</Button>
+            {permissions.canCreate && (
+                <Button variant='contained' sx={{my:2}} onClick={createDialog.openDialog}>Create</Button>
+            )}
             <UsersDataGrid
                 loading={isLoading}
                 rows={rows}

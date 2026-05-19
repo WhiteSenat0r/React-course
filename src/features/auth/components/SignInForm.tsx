@@ -13,35 +13,37 @@ import {PasswordInput} from "./inputs/PasswordInput.tsx";
 
 import {SignInAuthErrorAlert} from "./SignInAuthErrorAlert.tsx";
 
-export default function SignInForm() {
-    const { isAuthenticated, handleSignIn } = useAuth();
+// Constants
+const REMEMBER_ME_KEY = 'rememberMe';
 
-    const [email, setEmail] = useState('');
-    const [emailError, setEmailError] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordError, setPasswordError] = useState('');
+// Helper function to safely execute localStorage operations with error handling
+function safeLocalStorage<T>(operation: () => T, fallback: T): T {
+    try {
+        return operation();
+    } catch (error) {
+        console.warn('localStorage operation failed:', error);
+        return fallback;
+    }
+}
+
+// Helper functions for localStorage operations
+const getRememberMeFromStorage = (): boolean | null => {
+    return safeLocalStorage(() => {
+        const saved = localStorage.getItem(REMEMBER_ME_KEY);
+        return saved !== null ? saved === 'true' : null;
+    }, null);
+};
+
+const saveRememberMeToStorage = (value: boolean): void => {
+    safeLocalStorage(() => {
+        localStorage.setItem(REMEMBER_ME_KEY, String(value));
+        return undefined;
+    }, undefined);
+};
+
+// Custom hook for managing rememberMe state with localStorage persistence
+function useRememberMe(): [boolean, (event: React.ChangeEvent<HTMLInputElement>) => void] {
     const [rememberMe, setRememberMe] = useState(false);
-
-    // Helper functions for localStorage operations with error handling
-    const REMEMBER_ME_KEY = 'rememberMe';
-
-    const getRememberMeFromStorage = (): boolean | null => {
-        try {
-            const saved = localStorage.getItem(REMEMBER_ME_KEY);
-            return saved !== null ? saved === 'true' : null;
-        } catch (error) {
-            console.warn('Failed to read rememberMe from localStorage:', error);
-            return null;
-        }
-    };
-
-    const saveRememberMeToStorage = (value: boolean): void => {
-        try {
-            localStorage.setItem(REMEMBER_ME_KEY, String(value));
-        } catch (error) {
-            console.warn('Failed to save rememberMe to localStorage:', error);
-        }
-    };
 
     // Load rememberMe preference from localStorage on mount
     useEffect(() => {
@@ -56,11 +58,23 @@ export default function SignInForm() {
         saveRememberMeToStorage(event.target.checked);
     };
 
+    return [rememberMe, handleRememberMeChange];
+}
+
+export default function SignInForm() {
+    const { isAuthenticated, handleSignIn } = useAuth();
+
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [rememberMe, handleRememberMeChange] = useRememberMe();
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (emailError === '' && passwordError === '') {
-            await handleSignIn(e);
+            await handleSignIn(e, rememberMe);
         }
     };
 

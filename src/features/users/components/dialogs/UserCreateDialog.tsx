@@ -29,6 +29,7 @@ const UserCreateDialog: React.FC<UserCreateDialogProps> = ({users, open, onClose
             first_name: data.get('firstName') as string,
             last_name: data.get('lastName') as string,
             email: data.get('email') as string,
+            avatar: '',
         };
 
         const result = await handleCreateUser(createdUser);

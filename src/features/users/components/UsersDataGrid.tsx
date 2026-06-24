@@ -17,6 +17,13 @@ const UsersDataGridComponent: React.FC<UsersDataGridProps> = ({ rows, columns, p
         onRowClick(params.row as IUserTableRow);
     }, [onRowClick]);
 
+    const handlePaginationModelChange = useCallback((model: { page: number; pageSize: number }) => {
+        setPaginationModel({
+            ...model,
+            rowCount: paginationModel.rowCount
+        });
+    }, [setPaginationModel, paginationModel.rowCount]);
+
     return (
         <DataGrid
             sx={{
@@ -32,7 +39,7 @@ const UsersDataGridComponent: React.FC<UsersDataGridProps> = ({ rows, columns, p
             onRowClick={handleRowClick}
             disableRowSelectionOnClick
             paginationModel={paginationModel}
-            onPaginationModelChange={setPaginationModel}
+            onPaginationModelChange={handlePaginationModelChange}
             paginationMode='server'
             loading={loading}
         />

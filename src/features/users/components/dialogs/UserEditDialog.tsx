@@ -29,6 +29,7 @@ const UserEditDialog: React.FC<UserEditDialogProps> = ({ userRow, open, onClose,
             first_name: data.get('firstName') as string,
             last_name: data.get('lastName') as string,
             email: data.get('email') as string,
+            avatar: userRow.avatar || '',
         };
 
         const result = await handleEditUser(updatedUser);

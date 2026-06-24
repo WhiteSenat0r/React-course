@@ -2,6 +2,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import PersonIcon from '@mui/icons-material/Person';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import {Link} from "react-router-dom";
 import {APP_ROUTES} from "../../shared/variables/appRoutes.ts";
 
@@ -12,6 +13,12 @@ export const SideDrawerListItems = (
                 <PersonIcon />
             </ListItemIcon>
             <ListItemText primary="Users" />
+        </ListItemButton>
+        <ListItemButton component={Link} to={APP_ROUTES.TRENDS}>
+            <ListItemIcon>
+                <TrendingUpIcon />
+            </ListItemIcon>
+            <ListItemText primary="Trends" />
         </ListItemButton>
     </>
 );

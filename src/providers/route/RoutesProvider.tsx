@@ -29,7 +29,7 @@ export default function RoutesProvider() {
                     <Layout />
                 </ProtectedRoute>
             }>
-                <Route path={APP_ROUTES.TRENDS} element={<TrendsPage />} />
+                <Route index element={<TrendsPage />} />
             </Route>
 
             <Route path="/" element={<Navigate to={APP_ROUTES.USERS} />} />

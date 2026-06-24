@@ -52,7 +52,7 @@ const useUsersTableColumns = (handleEditClick: (event: React.MouseEvent, userRow
             },
 
         ];
-    }, [])
+    }, [handleEditClick, handleDeleteClick])
 
     return columns;
 };

@@ -18,7 +18,7 @@ const UsersTableContainer: React.FC = () => {
         rowCount: 0
     });
 
-    const {users, setUsers, isLoading, setNewUser, setEditedUser, deleteUserFromState} = useUsersState(paginationModel, setPaginationModel);
+    const {users, isLoading, setNewUser, setEditedUser, deleteUserFromState} = useUsersState(paginationModel, setPaginationModel);
     const { rows } = useUsersTableRows(users);
 
     const createDialog = useDialog();

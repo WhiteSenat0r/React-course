@@ -2,7 +2,6 @@ import {useCallback, useEffect, useMemo, useState} from "react";
 import {IUser} from "../interfaces/iUser.ts";
 import UsersHttpService from "../services/usersHttpService.ts";
 import {IUserResponse} from "../interfaces/iUserResponse.ts";
-import {useNotifications} from "@toolpad/core";
 import {IPaginationModel} from "../interfaces/iPaginationModel.ts";
 
 export const useUsersState = (paginationModel : IPaginationModel, setPaginationModel: (paginationModel : IPaginationModel) => void) => {
@@ -28,7 +27,7 @@ export const useUsersState = (paginationModel : IPaginationModel, setPaginationM
         };
 
         fetch();
-    }, [paginationModel.page, paginationModel.pageSize]);
+    }, [paginationModel.page, paginationModel.pageSize, paginationModel, setPaginationModel]);
 
     const setNewUser = useCallback((user: IUser) => {
         setUsers((prev) => [user, ...prev]);

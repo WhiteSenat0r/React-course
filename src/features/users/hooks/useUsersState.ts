@@ -53,5 +53,5 @@ export const useUsersState = (paginationModel : IPaginationModel, setPaginationM
         return users;
     }, [users]);
 
-    return {users: memoizedUser, setUsers, isLoading, setNewUser, setEditedUser, deleteUserFromState};
+    return {users: memoizedUser, isLoading, setNewUser, setEditedUser, deleteUserFromState};
 }

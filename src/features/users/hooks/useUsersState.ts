@@ -27,7 +27,7 @@ export const useUsersState = (paginationModel : IPaginationModel, setPaginationM
         };
 
         fetch();
-    }, [paginationModel.page, paginationModel.pageSize]);
+    }, [paginationModel, setPaginationModel]);
 
     const setNewUser = useCallback((user: IUser) => {
         setUsers((prev) => [user, ...prev]);

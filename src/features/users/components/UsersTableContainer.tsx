@@ -36,7 +36,7 @@ const UsersTableContainer: React.FC = () => {
                 onClose={createDialog.closeDialog}
                 onConfirm={setNewUser}
             />
-            <Button variant='contained' sx={{my:2}} onClick={createDialog.openDialog}>Create</Button>
+            <Button variant='contained' sx={{my:2}} onClick={() => createDialog.openDialog()}>Create</Button>
             <UsersDataGrid
                 loading={isLoading}
                 rows={rows}

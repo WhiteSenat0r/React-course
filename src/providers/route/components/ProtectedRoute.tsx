@@ -1,4 +1,4 @@
-import React, {Fragment, ReactNode} from "react";
+import React, {ReactNode} from "react";
 
 import {APP_ROUTES} from "../../../shared/variables/appRoutes.ts";
 
